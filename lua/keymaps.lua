@@ -24,6 +24,44 @@ vim.keymap.set("n", ";;", "<cmd>nohlsearch<CR>")
 -- vim.keymap.set("v", "kj", "<Esc>")
 -- vim.keymap.set("n", "kj", "<Esc>")
 
+vim.keymap.set("n", "<C-t>", function()
+	local manager = require("neo-tree.sources.manager")
+	local state = manager.get_state("filesystem")
+	local node = state.tree:get_node()
+
+	if not node then
+		vim.notify("No node selected in Neo-tree", vim.log.levels.ERROR)
+		return
+	end
+
+	local path = node.path
+	local is_dir = node.type == "directory"
+	local dir = is_dir and path or vim.fn.fnamemodify(path, ":h")
+
+	-- Save current window (Neo-tree), and move to next window (main buffer)
+	local current_win = vim.api.nvim_get_current_win()
+	vim.cmd("wincmd l") -- or "wincmd w" to go to next window
+	local target_win = vim.api.nvim_get_current_win()
+
+	if current_win == target_win then
+		vim.notify("Couldn't find another window to split from", vim.log.levels.ERROR)
+		return
+	end
+
+	-- Temporarily set splitright so the terminal appears to the right
+	local old_splitright = vim.o.splitright
+	vim.o.splitright = true
+	vim.cmd("vsplit")
+	vim.o.splitright = old_splitright
+
+	vim.cmd("vertical resize 50")
+
+	-- Change directory and open terminal
+	vim.cmd("lcd " .. vim.fn.fnameescape(dir))
+	vim.cmd("terminal")
+	vim.cmd("startinsert")
+end, { desc = "Open terminal on right from Neo-tree selection" })
+
 -- Show manual
 vim.keymap.set("n", "<Leader>m", "K", { desc = "Open terminal [M]anual page" })
 

@@ -26,4 +26,13 @@ return {
 	{
 		"mfussenegger/nvim-dap",
 	},
+	{
+		require("custom.plugins.cformat42"),
+	},
+	{
+		require("custom.plugins.inc-rename"),
+	},
+	{
+		require("custom.plugins.csvview"),
+	},
 }

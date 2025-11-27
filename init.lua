@@ -238,7 +238,7 @@ require("lazy").setup({
 
 					-- Rename the variable under your cursor.
 					--  Most Language Servers support renaming across files, etc.
-					map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+					-- map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 
 					-- Execute a code action, usually your cursor needs to be on top of an error
 					-- or a suggestion from your LSP for this to activate.
@@ -412,18 +412,18 @@ require("lazy").setup({
 			})
 		end,
 	},
-	-- C formatter for 42 school
-	{
-		"Diogo-ss/42-C-Formatter.nvim",
-		cmd = "CFormat42",
-		config = function()
-			local formatter = require("42-formatter")
-			formatter.setup({
-				formatter = "c_formatter_42",
-				filetypes = { c = true, h = true, cpp = true, hpp = true },
-			})
-		end,
-	},
+	-- -- C formatter for 42 school
+	-- {
+	-- 	"Diogo-ss/42-C-Formatter.nvim",
+	-- 	cmd = "CFormat42",
+	-- 	config = function()
+	-- 		local formatter = require("42-formatter")
+	-- 		formatter.setup({
+	-- 			formatter = "c_formatter_42",
+	-- 			filetypes = { c = true, h = true, cpp = true, hpp = true },
+	-- 		})
+	-- 	end,
+	-- },
 	{ -- Autoformat
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
